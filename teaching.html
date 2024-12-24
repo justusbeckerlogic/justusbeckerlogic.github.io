@@ -14,12 +14,11 @@
         }
         .teaching-entry {
             display: flex;
-            gap: 10px; /* Space between year and title */
+            gap: 5px; /* Minimal space between year and title */
             align-items: flex-start;
         }
         .teaching-entry .year {
-            flex: 0 0 120px; /* Fixed width for the year column */
-            font-weight: bold;
+            flex: 0 0 auto; /* Auto width for the year column */
         }
         .teaching-entry .title {
             flex: 1; /* Title takes the remaining space */
@@ -63,19 +62,19 @@
         <h2>Teaching Assistant</h2>
         <ul>
             <li class="teaching-entry">
-                <div class="year">2024/25</div>
+                <div class="year">2024/25 -</div>
                 <div class="title">Theories of Computation (B.Sc. Computer Science, University of Birmingham)</div>
             </li>
             <li class="teaching-entry">
-                <div class="year"></div>
-                <div class="title">- Mathematical and Logical Foundations of Computer Science (B.Sc. Computer Science, University of Birmingham)</div>
+                <div class="year">-</div>
+                <div class="title">Mathematical and Logical Foundations of Computer Science (B.Sc. Computer Science, University of Birmingham)</div>
             </li>
             <li class="teaching-entry">
-                <div class="year">2020/21</div>
+                <div class="year">2020/21 -</div>
                 <div class="title">Foundations of Logic: Logic I (B.A. Philosophy, Ruhr-University Bochum)</div>
             </li>
             <li class="teaching-entry">
-                <div class="year">2019/20</div>
+                <div class="year">2019/20 -</div>
                 <div class="title">Physics (B.Sc. Mechanical Engineering, Ruhr-University Bochum)</div>
             </li>
         </ul>
