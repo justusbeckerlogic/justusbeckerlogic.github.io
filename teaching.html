@@ -18,12 +18,13 @@
         }
         .teaching-entry {
             display: grid;
-            grid-template-columns: 120px 1fr;
-            gap: 5px;
+            grid-template-columns: 120px calc(100% - 120px);
+            gap: -10px; /* Add negative spacing */
             margin-bottom: 0.5rem;
         }
         .teaching-entry .year {
             text-align: right;
+            margin-right: -5px; /* Additional adjustment */
         }
         .teaching-entry .title {
             text-align: left;
