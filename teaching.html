@@ -13,15 +13,16 @@
             margin-top: 2rem;
         }
         .teaching-entry {
-            display: flex;
-            gap: 5px; /* Minimal space between year and title */
-            align-items: flex-start;
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 5px;
+            margin-bottom: 0.5rem;
         }
         .teaching-entry .year {
-            flex: 0 0 auto; /* Auto width for the year column */
+            text-align: right;
         }
         .teaching-entry .title {
-            flex: 1; /* Title takes the remaining space */
+            text-align: left;
         }
     </style>
 </head>
