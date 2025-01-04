@@ -8,9 +8,16 @@
     <style>
         body {
             font-size: 1em;
+            margin: 1rem; /* Narrow margins for less horizontal space */
+        }
+        h3 {
+            margin-top: 1.5rem;
         }
         .indented {
-            margin-left: 2rem; /* Adjust this value for more or less indentation */
+            margin-left: 2rem; /* Consistent indentation for selected text */
+        }
+        .compact {
+            line-height: 1; /* Remove spacing between lines */
         }
         .contact-section {
             display: flex;
@@ -23,6 +30,17 @@
         }
         .besides-academia {
             margin-top: 2rem;
+        }
+        .rss-title {
+            margin-top: 1rem;
+            font-weight: bold;
+        }
+        ul {
+            list-style-type: none; /* Remove bullets from RSS feed */
+            padding-left: 0;
+        }
+        ul li {
+            margin-bottom: 0.5rem;
         }
     </style>
 </head>
@@ -54,19 +72,24 @@
                 <p>My university email address is:</p>
                 <p class="indented">jvb443 [at] student.bham.ac.uk</p>
                 <p>My office desk is located at:</p>
-                <p class="indented">Room 218</p>
-                <p class="indented">School of Computer Science</p>
-                <p class="indented">Edgbaston Campus</p>
-                <p class="indented">B14 2TT, Birmingham</p>
-                <p class="indented">United Kingdom</p>
+                <p class="indented compact">
+                    Room 218<br>
+                    School of Computer Science<br>
+                    Edgbaston Campus<br>
+                    B14 2TT, Birmingham<br>
+                    United Kingdom
+                </p>
             </div>
 
             <!-- Updates Section -->
             <div class="updates">
                 <h3>Updates:</h3>
-                <div id="rss-feed">
-                    Loading updates from the Proof Theory Blog...
-                </div>
+                <p class="rss-title">From the Proof Theory Blog:</p>
+                <ul>
+                    <li>Title of RSS Entry 1</li>
+                    <li>Title of RSS Entry 2</li>
+                    <li>Title of RSS Entry 3</li>
+                </ul>
             </div>
         </div>
 
@@ -79,35 +102,5 @@
 
     <!-- Bootstrap JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-    <!-- RSS Feed Script -->
-    <script>
-        // Fetch and display RSS feed from the Proof Theory Blog
-        const rssFeedUrl = 'https://prooftheory.blog/feed/';
-        const rssFeedContainer = document.getElementById('rss-feed');
-
-        async function fetchRSSFeed() {
-            try {
-                const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssFeedUrl)}`);
-                const data = await response.json();
-
-                if (data.items && data.items.length > 0) {
-                    const feedItems = data.items.slice(0, 5); // Limit to 5 updates
-                    rssFeedContainer.innerHTML = '<ul>' + feedItems.map(item => `
-                        <li>
-                            <a href="${item.link}" target="_blank">${item.title}</a>
-                        </li>
-                    `).join('') + '</ul>';
-                } else {
-                    rssFeedContainer.innerHTML = 'No updates available.';
-                }
-            } catch (error) {
-                rssFeedContainer.innerHTML = 'Error fetching updates.';
-                console.error(error);
-            }
-        }
-
-        fetchRSSFeed();
-    </script>
 </body>
 </html>
