@@ -7,32 +7,36 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
+            margin: 0;
+            padding: 0;
             font-size: 1em;
-            margin: 1rem; /* Narrow margins for less horizontal space */
+        }
+        .container {
+            padding: 1rem;
         }
         h3 {
-            margin-top: 1.5rem;
-        }
-        .indented {
-            margin-left: 2rem; /* Consistent indentation for selected text */
-        }
-        .compact {
-            line-height: 1; /* Remove spacing between lines */
+            margin: 0.5rem 0; /* Reduced margin for headings */
         }
         .contact-section {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-top: 2rem;
+            gap: 1rem; /* Less gap between sections */
+        }
+        .indented {
+            margin-left: 2rem; /* Consistent indentation */
+        }
+        .compact {
+            line-height: 1; /* Remove extra spacing between lines */
         }
         .updates {
             max-width: 45%;
         }
         .besides-academia {
-            margin-top: 2rem;
+            margin-top: 1.5rem; /* Reduced space */
         }
         .rss-title {
-            margin-top: 1rem;
+            margin-top: 0.5rem; /* Reduced margin */
             font-weight: bold;
         }
         ul {
@@ -68,7 +72,7 @@
     </nav>
 
     <!-- Page Content -->
-    <div class="container mt-5">
+    <div class="container">
         <div class="contact-section">
             <!-- Contact Details -->
             <div class="contact-details">
@@ -105,25 +109,24 @@
     <!-- Bootstrap JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Fetch RSS Feed
-        const rssFeedUrl = 'https://prooftheory.blog/feed/'; // Replace with the desired RSS feed URL
+        const rssFeedUrl = 'https://api.rss2json.com/v1/api.json?rss_url=https://prooftheory.blog/feed/';
         const rssFeedContainer = document.getElementById('rss-feed');
 
         fetch(rssFeedUrl)
-            .then(response => response.text())
+            .then(response => response.json())
             .then(data => {
-                const parser = new DOMParser();
-                const xml = parser.parseFromString(data, 'application/xml');
-                const items = xml.querySelectorAll('item');
+                if (data.items) {
+                    data.items.forEach(item => {
+                        const title = item.title;
+                        const pubDate = new Date(item.pubDate).toLocaleDateString();
 
-                items.forEach(item => {
-                    const title = item.querySelector('title').textContent;
-                    const pubDate = new Date(item.querySelector('pubDate').textContent).toLocaleDateString();
-
-                    const li = document.createElement('li');
-                    li.innerHTML = `<strong>${title}</strong><br><span class="rss-date">${pubDate}</span>`;
-                    rssFeedContainer.appendChild(li);
-                });
+                        const li = document.createElement('li');
+                        li.innerHTML = `<strong>${title}</strong><br><span class="rss-date">${pubDate}</span>`;
+                        rssFeedContainer.appendChild(li);
+                    });
+                } else {
+                    rssFeedContainer.innerHTML = '<li>No updates available.</li>';
+                }
             })
             .catch(error => {
                 rssFeedContainer.innerHTML = '<li>Unable to fetch RSS feed.</li>';
