@@ -14,41 +14,20 @@
         .container {
             padding: 1rem;
         }
-        h3 {
-            margin: 0.5rem 0; /* Reduced margin for headings */
-        }
-        .contact-section {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 1rem; /* Less gap between sections */
-        }
-        .indented {
-            margin-left: 2rem; /* Consistent indentation */
-        }
-        .compact {
-            line-height: 1; /* Remove extra spacing between lines */
-        }
-        .updates {
-            max-width: 45%;
-        }
-        .besides-academia {
-            margin-top: 1.5rem; /* Reduced space */
-        }
-        .rss-title {
-            margin-top: 0.5rem; /* Reduced margin */
-            font-weight: bold;
-        }
         ul {
             list-style-type: none; /* Remove bullets from RSS feed */
             padding-left: 0;
         }
         ul li {
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
         }
         .rss-date {
             font-size: 0.9em;
             color: gray;
+        }
+        .rss-author {
+            font-size: 0.9em;
+            color: darkgray;
         }
     </style>
 </head>
@@ -78,9 +57,9 @@
             <div class="contact-details">
                 <h3>Contact Details:</h3>
                 <p>My university email address is:</p>
-                <p class="indented">jvb443 [at] student.bham.ac.uk</p>
+                <p>jvb443 [at] student.bham.ac.uk</p>
                 <p>My office desk is located at:</p>
-                <p class="indented compact">
+                <p>
                     Room 218<br>
                     School of Computer Science<br>
                     Edgbaston Campus<br>
@@ -92,7 +71,7 @@
             <!-- Updates Section -->
             <div class="updates">
                 <h3>Updates:</h3>
-                <p class="rss-title">From the Proof Theory Blog:</p>
+                <p><strong>From the Proof Theory Blog:</strong></p>
                 <ul id="rss-feed">
                     <!-- RSS entries will be added dynamically here -->
                 </ul>
@@ -116,12 +95,17 @@
             .then(response => response.json())
             .then(data => {
                 if (data.items) {
-                    data.items.forEach(item => {
+                    // Limit to 5 RSS entries
+                    const limitedItems = data.items.slice(0, 5);
+                    limitedItems.forEach(item => {
                         const title = item.title;
+                        const author = item.author || 'Unknown Author';
                         const pubDate = new Date(item.pubDate).toLocaleDateString();
 
                         const li = document.createElement('li');
-                        li.innerHTML = `<strong>${title}</strong><br><span class="rss-date">${pubDate}</span>`;
+                        li.innerHTML = `<strong>${title}</strong><br>
+                                        <span class="rss-date">${pubDate}</span> | 
+                                        <span class="rss-author">by ${author}</span>`;
                         rssFeedContainer.appendChild(li);
                     });
                 } else {
