@@ -27,6 +27,9 @@
         .rss-item {
             margin-bottom: 1rem;
         }
+        .compact {
+            margin-bottom: 0; /* No spacing between lines */
+        }
     </style>
 </head>
 <body>
@@ -57,16 +60,19 @@
                 <p>My university email address is:</p>
                 <p class="indented">jvb443 [at] student.bham.ac.uk</p>
                 <p>My office desk is located at:</p>
-                <p class="indented">Room 218</p>
-                <p class="indented">School of Computer Science</p>
-                <p class="indented">Edgbaston Campus</p>
-                <p class="indented">B14 2TT, Birmingham</p>
-                <p class="indented">United Kingdom</p>
+                <div class="indented compact">
+                    <p class="compact">Room 218</p>
+                    <p class="compact">School of Computer Science</p>
+                    <p class="compact">Edgbaston Campus</p>
+                    <p class="compact">B14 2TT, Birmingham</p>
+                    <p class="compact">United Kingdom</p>
+                </div>
             </div>
 
             <!-- Updates Section -->
             <div class="updates">
                 <h3>Updates:</h3>
+                <h5>From the Proof Theory Blog</h5>
                 <div id="rss-feed">
                     <p>Loading updates from the <a href="https://prooftheory.blog/feed/" target="_blank">Proof Theory RSS feed</a>...</p>
                 </div>
@@ -97,7 +103,12 @@
                     data.items.slice(0, 5).forEach(item => {
                         const rssItem = document.createElement("div");
                         rssItem.classList.add("rss-item");
-                        rssItem.innerHTML = `<a href="${item.link}" target="_blank">${item.title}</a><br><small>${new Date(item.pubDate).toLocaleDateString()}</small>`;
+                        rssItem.innerHTML = `
+                            <a href="${item.link}" target="_blank">${item.title}</a><br>
+                            <small>
+                                Published on: ${new Date(item.pubDate).toLocaleDateString()} 
+                                by ${item.author || "Unknown Author"}
+                            </small>`;
                         rssFeedContainer.appendChild(rssItem);
                     });
                 } else {
