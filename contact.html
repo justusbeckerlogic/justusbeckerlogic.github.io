@@ -3,35 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact - Justus Vincent Becker</title>
+    <title>Contact - Justus Becker</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        .contact-details {
-            text-align: left;
+        body {
+            font-size: 1em;
         }
-        .contact-details dt {
-            font-weight: bold;
+        .indented {
+            margin-left: 2rem; /* Adjust this value for more or less indentation */
         }
-        .contact-details dd {
-            margin-left: 20px;
-            margin-bottom: 0.5rem;
+        .contact-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-top: 2rem;
         }
-        .rss-feed {
-            text-align: left;
-        }
-        .rss-feed h4 {
-            margin-top: 1.5rem;
-        }
-        .rss-feed .entry-title {
-            font-weight: bold;
-        }
-        .rss-feed .entry-meta {
-            font-size: 0.9rem;
-            color: #555;
+        .updates {
+            max-width: 45%;
         }
         .besides-academia {
             margin-top: 2rem;
-            text-align: left;
+        }
+        .rss-item {
+            margin-bottom: 1rem;
         }
     </style>
 </head>
@@ -56,28 +50,25 @@
 
     <!-- Page Content -->
     <div class="container mt-5">
-        <div class="row">
+        <div class="contact-section">
             <!-- Contact Details -->
-            <div class="col-md-6 contact-details">
+            <div class="contact-details">
                 <h3>Contact Details:</h3>
-                <dl>
-                    <dt>University Email Address:</dt>
-                    <dd>jvb443 [at] student.bham.ac.uk</dd>
-                    <dt>Office Location:</dt>
-                    <dd>Room 218</dd>
-                    <dd>School of Computer Science</dd>
-                    <dd>Edgbaston Campus</dd>
-                    <dd>B14 2TT, Birmingham</dd>
-                    <dd>United Kingdom</dd>
-                </dl>
+                <p>My university email address is:</p>
+                <p class="indented">jvb443 [at] student.bham.ac.uk</p>
+                <p>My office desk is located at:</p>
+                <p class="indented">Room 218</p>
+                <p class="indented">School of Computer Science</p>
+                <p class="indented">Edgbaston Campus</p>
+                <p class="indented">B14 2TT, Birmingham</p>
+                <p class="indented">United Kingdom</p>
             </div>
 
-            <!-- RSS Feed -->
-            <div class="col-md-6 rss-feed">
+            <!-- Updates Section -->
+            <div class="updates">
                 <h3>Updates:</h3>
-                <h4>From the Proof Theory Blog</h4>
-                <div id="rss-entries">
-                    <!-- RSS entries will be inserted here by JavaScript -->
+                <div id="rss-feed">
+                    <p>Loading updates from the <a href="https://prooftheory.blog/feed/" target="_blank">Proof Theory RSS feed</a>...</p>
                 </div>
             </div>
         </div>
@@ -85,40 +76,40 @@
         <!-- Besides Academia Section -->
         <div class="besides-academia">
             <h3>Besides Academia:</h3>
-            <p>In my free time, I enjoy various activities that help me relax and stay creative. Whether it's hiking in nature, playing the guitar, or experimenting with new recipes in the kitchen, I always find ways to keep myself engaged and inspired outside of my academic pursuits.</p>
+            <p>In my free time...</p>
         </div>
     </div>
 
     <!-- Bootstrap JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-    <!-- JavaScript to Fetch and Display RSS Feed -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            fetch('https://prooftheory.blog/feed/')
-                .then(response => response.text())
-                .then(str => new window.DOMParser().parseFromString(str, 'text/xml'))
-                .then(data => {
-                    const items = data.querySelectorAll('item');
-                    let html = '';
-                    items.forEach((item, index) => {
-                        if (index < 5) { // Limit to first 5 items
-                            const title = item.querySelector('title').textContent;
-                            const link = item.querySelector('link').textContent;
-                            const pubDate = new Date(item.querySelector('pubDate').textContent);
-                            const author = item.querySelector('dc\\:creator') ? item.querySelector('dc\\:creator').textContent : 'Unknown Author';
-                            html += `
-                                <div class="rss-entry">
-                                    <div class="entry-title"><a href="${link}" target="_blank">${title}</a></div>
-                                    <div class="entry-meta">By ${author} on ${pubDate.toLocaleDateString()}</div>
-                                </div>
-                            `;
-                        }
+        // Fetch RSS Feed
+        async function fetchRSSFeed() {
+            const rssFeedContainer = document.getElementById("rss-feed");
+            const rssFeedUrl = "https://prooftheory.blog/feed/";
+
+            try {
+                const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${rssFeedUrl}`);
+                const data = await response.json();
+
+                if (data && data.items) {
+                    rssFeedContainer.innerHTML = "";
+                    data.items.slice(0, 5).forEach(item => {
+                        const rssItem = document.createElement("div");
+                        rssItem.classList.add("rss-item");
+                        rssItem.innerHTML = `<a href="${item.link}" target="_blank">${item.title}</a><br><small>${new Date(item.pubDate).toLocaleDateString()}</small>`;
+                        rssFeedContainer.appendChild(rssItem);
                     });
-                    document.getElementById('rss-entries').innerHTML = html;
-                })
-                .catch(error => console.error('Error fetching RSS feed:', error));
-        });
+                } else {
+                    rssFeedContainer.innerHTML = "<p>No updates available at this time.</p>";
+                }
+            } catch (error) {
+                rssFeedContainer.innerHTML = "<p>Failed to load updates. Please try again later.</p>";
+                console.error("Error fetching RSS feed:", error);
+            }
+        }
+
+        fetchRSSFeed();
     </script>
 </body>
 </html>
