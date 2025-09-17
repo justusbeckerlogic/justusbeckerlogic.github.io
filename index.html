@@ -3,61 +3,486 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About - Justus Becker</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Justus V. Becker</title>
     <style>
-        .content-wrapper {
-            display: flex;
-            align-items: flex-start;
-            gap: 20px;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        .content-wrapper img {
-            max-width: 100%;
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6; /* CHANGE: Added decent line spacing as requested (y parameter) */
+            color: #333;
+            font-size: 1.1em; /* CHANGE: Increased text size */
+        }
+
+        /* Hero image section */
+        .hero {
+            width: 100%;
+            height: 25vw; /* CHANGE: 16:4 aspect ratio = 25% of viewport width */
+            max-height: 480px; /* CHANGE: Maximum height to prevent it from getting too tall on very wide screens */
+            min-height: 200px; /* CHANGE: Minimum height for mobile devices */
+            background-image: url('background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* Sticky navigation bar */
+        .nav-bar {
+            background-color: #2c3e50; /* CHANGE: Set to dark blue-gray (color hex code - can be changed) */
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .nav-name {
+            color: white;
+            font-size: 1.4em;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1em;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #3498db;
+        }
+
+        /* Section headers */
+        .section-header {
+            background-color: #34495e; /* CHANGE: Set to dark gray-blue (color hex code - can be changed) */
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            font-size: 1.8em;
+            font-weight: bold;
+            width: 100%;
+        }
+
+        /* Content container */
+        .content {
+            max-width: 65%; /* CHANGE: Increased from 50% to 65% as suggested */
+            margin: 0 auto;
+            padding: 30px 20px;
+            text-align: justify;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .content {
+                max-width: 90%; /* CHANGE: Full width on mobile as requested */
+            }
+            
+            .nav-bar {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                gap: 20px;
+            }
+        }
+
+        /* Profile section specific styling */
+        .profile-section {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
+            align-items: flex-start;
+        }
+
+        .profile-img {
+            width: 200px; /* CHANGE: Set width to 200px (z parameter - can be adjusted) */
             height: auto;
-            width: calc(25%); /* Scales down the image to 25% of original size */
+            border-radius: 8px;
             flex-shrink: 0;
         }
-        .content-wrapper .text-content {
+
+        .profile-text {
             flex: 1;
-            max-width: calc(2.5 * 25%); /* Set text width to 2.5 times the image width */
-            text-align: justify;
-            font-size: 1.2em; /* Increase font size */
+        }
+
+        /* Research section styling */
+        .subsection {
+            margin-bottom: 30px;
+        }
+
+        .subsection h3 {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        .subsection ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .subsection li {
+            margin-bottom: 10px;
+            padding-left: 0;
+        }
+
+        /* Teaching section - aligned entries */
+        .teaching-list {
+            list-style: none;
+        }
+
+        .teaching-list li {
+            margin-bottom: 8px;
+            display: flex;
+        }
+
+        .year-part {
+            min-width: 80px;
+            flex-shrink: 0;
+        }
+
+        /* Two column layout for More section */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+            
+            .profile-section {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        /* Contact details styling */
+        .address-block {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-left: 4px solid #3498db;
+            margin: 15px 0;
+            font-family: monospace;
+        }
+
+        /* Updates list styling */
+        .updates-list {
+            list-style: none;
+        }
+
+        .updates-list li {
+            margin-bottom: 8px;
+            display: flex;
+        }
+
+        .update-date {
+            min-width: 120px;
+            flex-shrink: 0;
+            font-weight: bold;
+        }
+
+        .expand-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .expand-btn:hover {
+            background: #2980b9;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Links styling */
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Blog feed styling */
+        .blog-feed {
+            list-style: none;
+        }
+
+        .blog-feed li {
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .blog-feed a {
+            font-weight: bold;
+        }
+
+        .rss-item {
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .rss-item a {
+            font-weight: bold;
+            color: #2c3e50;
+            text-decoration: none;
+        }
+
+        .rss-item a:hover {
+            color: #3498db;
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">Justus Vincent Becker</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link active" href="index.html">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="research.html">Research</a></li>
-                    <li class="nav-item"><a class="nav-link" href="teaching.html">Teaching</a></li>
-                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+    <!-- Hero Image -->
+    <div class="hero"></div>
+
+    <!-- Sticky Navigation -->
+    <nav class="nav-bar">
+        <div class="nav-name">Justus Vincent Becker</div>
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#research">Research</a></li>
+            <li><a href="#teaching">Teaching</a></li>
+            <li><a href="#more">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="section-header">About</div>
+        <div class="content">
+            <h2 style="margin-bottom: 20px;">Hello and welcome to my website!</h2>
+            
+            <div class="profile-section">
+                <img src="profile.jpg" alt="Justus Vincent Becker" class="profile-img">
+                <div class="profile-text">
+                    <p>I am a PhD student at the Group for Theoretical Computer Science at the University of Birmingham. I started my PhD in autumn of 2024 under the supervision of Sonia Marin and Anupam Das. My interests lie in the proof theory of modal logic, more specifically in modal provability logic and intuitionistic modalities. Beyond that, I am also interested in effective proof translations, deep inference and universal proof theory.</p>
+                </div>
+            </div>
+            
+            <p>Before my doctoral studies, I obtained my Master of Logic at the Institute of Logic Language and Computation (ILLC) in Amsterdam. There, I wrote my thesis under the supervision of Marianna Grirlando on proof translations.</p>
+        </div>
+    </section>
+
+    <!-- Research Section -->
+    <section id="research">
+        <div class="section-header">Research</div>
+        <div class="content">
+            <div class="subsection">
+                <h3>Journal Articles</h3>
+                <ul>
+                    <li>Work in progress.</li>
+                </ul>
+            </div>
+
+            <div class="subsection">
+                <h3>Conference Proceedings</h3>
+                <ul>
+                    <li>Work in progress.</li>
+                </ul>
+            </div>
+
+            <div class="subsection">
+                <h3>Theses</h3>
+                <ul>
+                    <li>2024 – Proof Translations for Intuitionistic Modal Logic.<br>
+                        Master's Thesis, ILLC, University of Amsterdam</li>
+                    <li>2022 – First-Order Modal Predicate Logic, Modal Realism and the Problem of Transworld Identity.<br>
+                        Bachelor's Thesis in Philosophy, Ruhr-University Bochum</li>
+                </ul>
+            </div>
+
+            <div class="subsection">
+                <h3>Selected Communications</h3>
+                <ul>
+                    <li>2024 – Some Proof Translations for Intuitionistic Modal Logic.<br>
+                        Contributed talk at the 2024 British Logic Colloquium in Birmingham (6 September 2024)</li>
+                    <li>2025 – A Non-Wellfounded and Labelled Sequent Calculus for Bimodal Provability Logic.<br>
+                        Contributed talk at the 7th International School and Workshop on Proof Theory in Ghent (5 September 2025)</li>
                 </ul>
             </div>
         </div>
-    </nav>
+    </section>
 
-    <!-- Page Content -->
-    <div class="container mt-5">
-        <div class="content-wrapper">
-            <img src="picture.jpg" alt="A picture of Justus Vincent Becker" class="img-fluid">
-            <div class="text-content">
-                <p>Hi there, welcome to my webpage!</p>
-                <p>I am a PhD student in the Theory of Computation group at the Department of Computer Science at the University of Birmingham, supervised by <a href="https://filipendule.github.io" target="_blank">Sonia Marin</a> and <a href="https://anupamdas.com" target="_blank">Anupam Das</a>.</p>
-                <p>My main interests are in Proof Theory for Modal Logic. This includes the study of modal provability logics and intuitionistic logics, as well as the investigation of effective proof translations.</p>
-                <p>Before my doctoral studies, I did my Master's degree in Logic at the <a href="https://illc.uva.nl" target="_blank">ILLC</a> at the University of Amsterdam. I have written my Master of Logic thesis under the supervision of <a href="https://mariannagirlando.com" target="_blank">Marianna Girlando</a> on “Proof Translations for Intuitionistic Modal Logic”. Before that, I did my Bachelor studies in Philosophy and Physics at the Ruhr-University Bochum, where I wrote my thesis on (first-order) Modal Realism under the supervision of <a href="https://www.pe.ruhr-uni-bochum.de/philosophie/i/logic/index.html.en" target="_blank">Heinrich Wansing</a>.</p>
+    <!-- Teaching Section -->
+    <section id="teaching">
+        <div class="section-header">Teaching</div>
+        <div class="content">
+            <div class="subsection">
+                <h3>Teaching Assistant</h3>
+                <ul class="teaching-list">
+                    <li><span class="year-part">2024/25</span> Theories of Computation (B.Sc. Computer Science, University of Birmingham)</li>
+                    <li><span class="year-part">2024/25</span> Mathematical and Logical Foundations of CS (B.Sc. Computer Science, University of Birmingham)</li>
+                    <li><span class="year-part">2020/21</span> Foundations of Logic: Logic I (B.A. Philosophy, Ruhr-University Bochum)</li>
+                    <li><span class="year-part">2019/20</span> Physics (B.Sc. Mechanical Engineering, Ruhr-University Bochum)</li>
+                </ul>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Bootstrap JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- More Section -->
+    <section id="more">
+        <div class="section-header">More</div>
+        <div class="content">
+            <div class="two-column">
+                <!-- First Column -->
+                <div>
+                    <div class="subsection">
+                        <h3>Contact Details</h3>
+                        <p>You can contact me via email under my student address</p>
+                        
+                        <div style="text-align: center; font-weight: bold; margin: 20px 0; font-size: 1em;">
+                            jvb443 [at] student.bham.ac.uk
+                        </div>
+                        
+                        <p>My office desk is located at</p>
+                        
+                        <div class="address-block">
+                            Room 218<br>
+                            School of Computer Science<br>
+                            Edgbaston Campus<br>
+                            B14 2TT, Birmingham<br>
+                            United Kingdom
+                        </div>
+
+                        <p>My <a href="https://arxiv.org/a/becker_j_2" target="_blank">ArXiv</a> and <a href="https://orcid.org/0009-0004-2665-0949" target="_blank">OrchID</a> profiles</p>
+                    </div>
+
+                    <div class="subsection">
+                        <h3>Besides Academia</h3>
+                        <p>When I am not occupied with proofs and modalities, I like to cycle the city (at least as far as it is easily possible). Beyond that, I enjoy the genius of Into the Breach, read books (also in my free time) and occasionally I like to play the piano.</p>
+                    </div>
+                </div>
+
+                <!-- Second Column -->
+                <div>
+                    <div class="subsection">
+                        <h3>Updates</h3>
+                        <ul class="updates-list" id="updates-list">
+                            <li><span class="update-date">11. Sept. 2025</span> I gave a contributed talk at the BLC in Manchester</li>
+                            <li><span class="update-date">5. Sept. 2025</span> I gave a contributed talk at the 7th Proof Society in Ghent</li>
+                            <li><span class="update-date">6. Aug. 2025</span> I gave a student session talk at ESSLLI in Bochum</li>
+                            <li><span class="update-date">6. Sept. 2024</span> I gave a contributed talk at the BLC in Birmingham</li>
+                            <li><span class="update-date">26. Aug. 2024</span> I defended my master's thesis in Amsterdam</li>
+                        </ul>
+                        <!-- CHANGE: Simplified to show all 5 items since that's all you provided -->
+                    </div>
+
+                    <div class="subsection">
+                        <h3>Proof Theory Blog</h3>
+                        <div id="rss-feed">
+                            <p>Loading blog posts...</p>
+                        </div>
+                        <button class="expand-btn" id="blog-expand" style="display:none;">Show More Posts</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Fetch RSS Feed using your suggested approach
+        async function fetchRSSFeed() {
+            const rssFeedContainer = document.getElementById("rss-feed");
+            const rssFeedUrl = "https://prooftheory.blog/feed/";
+            const expandBtn = document.getElementById('blog-expand');
+            
+            try {
+                const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${rssFeedUrl}`);
+                const data = await response.json();
+                
+                if (data && data.items) {
+                    rssFeedContainer.innerHTML = "";
+                    const allItems = data.items.slice(0, 10); // Keep up to 10 items
+                    const initialItems = data.items.slice(0, 5); // Show first 5
+                    
+                    // Display initial 5 items
+                    initialItems.forEach(item => {
+                        const rssItem = document.createElement("div");
+                        rssItem.classList.add("rss-item");
+                        rssItem.innerHTML = `
+                            <a href="${item.link}" target="_blank">${item.title}</a><br>
+                            <small>
+                                Published on: ${new Date(item.pubDate).toLocaleDateString()} 
+                                by ${item.author || "Unknown Author"}
+                            </small>`;
+                        rssFeedContainer.appendChild(rssItem);
+                    });
+                    
+                    // Show expand button if more than 5 items available
+                    if (allItems.length > 5) {
+                        expandBtn.style.display = 'block';
+                        expandBtn.onclick = () => {
+                            rssFeedContainer.innerHTML = "";
+                            allItems.forEach(item => {
+                                const rssItem = document.createElement("div");
+                                rssItem.classList.add("rss-item");
+                                rssItem.innerHTML = `
+                                    <a href="${item.link}" target="_blank">${item.title}</a><br>
+                                    <small>
+                                        Published on: ${new Date(item.pubDate).toLocaleDateString()} 
+                                        by ${item.author || "Unknown Author"}
+                                    </small>`;
+                                rssFeedContainer.appendChild(rssItem);
+                            });
+                            expandBtn.style.display = 'none';
+                        };
+                    }
+                } else {
+                    rssFeedContainer.innerHTML = "<p>No updates available at this time.</p>";
+                }
+            } catch (error) {
+                rssFeedContainer.innerHTML = "<p>Failed to load updates. Please try again later.</p>";
+                console.error("Error fetching RSS feed:", error);
+            }
+        }
+
+        // Load RSS feed when page loads
+        document.addEventListener('DOMContentLoaded', fetchRSSFeed);
+    </script>
 </body>
 </html>
