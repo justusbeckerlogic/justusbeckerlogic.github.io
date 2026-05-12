@@ -261,7 +261,13 @@
             color: #3498db;
             text-decoration: underline;
         }
+    #updates-list li:nth-child(n+6) {
+            display: none;
+        }
 
+        #updates-list.expanded li:nth-child(n+6) {
+            display: list-item;
+        }
     </style>
 </head>
 <body>
@@ -410,13 +416,6 @@
                 </div>
 
                 <!-- Second Column -->
-                #updates-list li:nth-child(n+6) {
-                    display: none;
-                }
-                
-                #updates-list.expanded li:nth-child(n+6) {
-                    display: list-item;
-                }
 
                 <div>
                     <div class="subsection">
