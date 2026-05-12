@@ -299,8 +299,8 @@
                     for intuitionistic modal logic.</p>
 
                     <p>
-                        I started my journey in logic during my bachelor's in philosophy and physics at <a href="rub.de" target="_blank">Ruhr-University Bochum</a>. There, I have written my thesis on first-order modal logic
-                        and discussed implications of modal realism under the supervision of Heinrich Wansing.
+                        I started my journey in logic during my bachelor's in philosophy and physics at <a href="https://rub.de/" target="_blank">Ruhr-University Bochum</a>. There, I have written my thesis on first-order modal logic
+                        and discussed implications of modal realism under the supervision of <a href="https://sites.google.com/view/heinrichwansing/" target="_blank">Heinrich Wansing</a>.
                     </p>
                 </div>
             </div>   
@@ -326,6 +326,14 @@
             </div>
 
             <div class="subsection">
+                <h3>Preprints</h3>
+                <ul>
+                    <li>The proof theory and semantics of second-order (intuitionistic) tense logic. <a href="https://arxiv.org/abs/2602.06253" target="_blank">(arxiv)</a> <br>
+                    with Anupam Das, Sonia Marin and Paaras Padhiar</li>
+                </ul>
+            </div>
+
+            <div class="subsection">
                 <h3>Theses</h3>
                 <ul>
                     <li>2024 – Proof Translations for Intuitionistic Modal Logic. <a href="https://eprints.illc.uva.nl/id/eprint/2325/1/MoL-2024-08.text.pdf" target="_blank">(pdf)</a> <br>
@@ -338,7 +346,9 @@
             <div class="subsection">
                 <h3>Selected Communications</h3>
                 <ul>
-                    <li>2025 – A Non-Wellfounded and Labelled Sequent Calculus for Bimodal Provability Logic. <a href="Abstract_Proof_Society_2025.pdf" target="_blank">(abstract)</a><br>
+                    <li>2026 - The Proof Theory and Semantics for Second-order (Intuitionistic) Tense Logic. <a href="Presentation_BCTCS_2026.pdf" target="_blank">(slides)</a><br>
+                        Contributed talk at the 42nd British Colloquium for Theoretical Computer Science in Birmingham (1 April 2026)
+                    <li>2025 – A Non-Wellfounded and Labelled Sequent Calculus for Bimodal Provability Logic. <a href="Abstract_Proof_Society_2025.pdf" target="_blank">(abstract)</a> <a href="Presentation_Proof_Society_2025.pdf" target="_blank">(slides)</a><br>
                         Contributed talk at the 7th International School and Workshop on Proof Theory in Ghent (5 September 2025)</li>
                     <li>2024 – Some Proof Translations for Intuitionistic Modal Logic. <a href="Presentation%20BLC_Becker.pdf" target="_blank">(slides)</a><br>
                         Contributed talk at the 2024 British Logic Colloquium in Birmingham (6 September 2024)</li>
@@ -354,6 +364,7 @@
             <div class="subsection">
                 <h3>Teaching Assistant</h3>
                 <ul class="teaching-list">
+                    <li><span class="year-part">2025/26</span> Mathematical and Logical Foundations of CS (B.Sc. Computer Science, University of Birmingham)</li>
                     <li><span class="year-part">2024/25</span> Theories of Computation (B.Sc. Computer Science, University of Birmingham)</li>
                     <li><span class="year-part">2024/25</span> Mathematical and Logical Foundations of CS (B.Sc. Computer Science, University of Birmingham)</li>
                     <li><span class="year-part">2020/21</span> Foundations of Logic: Logic I (B.A. Philosophy, Ruhr-University Bochum)</li>
@@ -399,30 +410,40 @@
                 </div>
 
                 <!-- Second Column -->
+                <style>
+                .updates-list li:nth-child(n+6) {
+                display: none;
+                }
+
+                .updates-list.expanded li:nth-child(n+6) {
+                display: list-item;
+                }
+                </style>
+
                 <div>
                     <div class="subsection">
                         <h3>Updates</h3>
                         <ul class="updates-list" id="updates-list">
-                            <li><span class="update-date">11. Sept. 2025</span> I gave a contributed talk at the BLC in Manchester</li>
-                            <li><span class="update-date">5. Sept. 2025</span> I gave a contributed talk at the 7th Proof Society in Ghent</li>
+                            <li><span class="update-date">12. Jan.- 27. Mar. 2026</span> I visited Revantha Ramanayake and his research group in Groningen</li>
+                            <li><span class="update-date">10. Dec 2025</span> I gave a talk at the <a href="https://fdahlqvist.github.io/SMLS25/SMLS-qmul25.html" target="_blank">10th SMLS</a> in London</li>
+                            <li><span class="update-date">11. Sept. 2025</span> I gave a contributed talk at the <a href="https://sites.google.com/view/blc2025/home" target="_blank">BLC</a> in Manchester</li>
+                            <li><span class="update-date">5. Sept. 2025</span> I gave a contributed talk at the <a href="https://proof2025.ugent.be" target="_blank">7th Proof Society</a> in Ghent</li>
                             <li><span class="update-date">6. Aug. 2025</span> I gave a student session talk at ESSLLI in Bochum</li>
                             <li><span class="update-date">6. Sept. 2024</span> I gave a contributed talk at the BLC in Birmingham</li>
                             <li><span class="update-date">26. Aug. 2024</span> I defended my master's thesis in Amsterdam</li>
                         </ul>
-                        <!-- CHANGE: Simplified to show all 5 items since that's all you provided -->
-                    </div>
-
-                    <div class="subsection">
-                        <h3>The Proof Theory Blog</h3>
-                        <div id="rss-feed">
-                            <p>Loading blog posts...</p>
-                        </div>
-                        <button class="expand-btn" id="blog-expand" style="display:none;">Show More Posts</button>
+                        <button class="expand-btn" id="updates-toggle" onclick="toggleUpdates()">Show more</button>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
+                
+                <script>
+                    function toggleUpdates() {
+                        const list = document.getElementById('updates-list');
+                        const btn = document.getElementById('updates-toggle');
+                        const expanded = list.classList.toggle('expanded');
+                        btn.textContent = expanded ? 'Show less' : 'Show more';
+                    }
+                </script>
 
     <script>
         // Smooth scrolling for navigation links
