@@ -260,13 +260,20 @@
             font-size: 0.9em;
             color: #666;
             display: flex;
-            gap: 10px;
+            gap: 12px;
             flex-wrap: wrap;
+            align-items: center;
         }
 
         .rss-item-meta span {
             display: flex;
             align-items: center;
+            gap: 4px;
+        }
+
+        .rss-item-author {
+            max-width: 100%;
+            word-break: break-word;
         }
 
         /* Button styling improvements */
@@ -360,18 +367,17 @@
             <div class="profile-section">
                 <img src="profile(1).jpg" alt="Justus Vincent Becker" class="profile-img">
                 <div class="profile-text">
-                    <p style="margin-bottom: 20px;">I am a PhD student in the <a href="https://www.birmingham.ac.uk/research/centres-institutes/research-in-computer-science/theory-of-computation" target="_blank">
-                        Theory of Computation Group</a> at the University of Birmingham. I started my PhD in autumn of 2024 and I am being supervised by
+                    <p style="margin-bottom: 20px;">I am a PhD student in the <a href="https://www.birmingham.ac.uk/research/centres-institutes/research-in-computer-science/theory-of-computation" target="_blank">Theory of Computation Group</a> at the University of Birmingham. I started my PhD in autumn of 2024 and I am being supervised by
                         <a href="https://filipendule.github.io" target="_blank">Sonia Marin</a>, <a href="https://www.anupamdas.com/" target="_blank">Anupam Das</a> and <a href="https://toddwaughambri.github.io/" target="_blank">Todd Waugh Ambrose</a>.
                         My research is in proof theory of modal logic, more specifically I am interested in how modal provability logic and intuitionistic modalities can be handled proof-theoretically.
                         Beyond that, I am also interested in effective proof translations, deep inference and universal proof theory.</p>
 
-                    <p style="margin-bottom: 20px;">Before my doctoral studies, I obtained a Master of Logic degree at the <a href="https://illc.uva.nl" target="_blank">Institute for Logic Language and Computation (ILLC)</a>
+                    <p style="margin-bottom: 20px;">Before my doctoral studies, I obtained a Master of Logic degree at the <a href="https://illc.uva.nl" target="_blank">Institute for Logic Language and Computation</a>
                     in Amsterdam. There, I wrote my thesis under the supervision of <a href="https://mariannagirlando.com/Girlando.html" target="_blank">Marianna Girrlando</a> on proof translations 
                     for intuitionistic modal logic.</p>
 
                     <p>
-                        I started my journey in logic during my bachelor's in philosophy and physics at <a href="https://rub.de/" target="_blank">Ruhr-University Bochum</a>. There, I have written my thesis
+                        I started my journey in logic during my bachelor's in philosophy and physics at <a href="https://rub.de/" target="_blank">Ruhr-University Bochum</a>. There, I have written my thesis on modal realism
                         and discussed implications of modal realism under the supervision of <a href="https://sites.google.com/view/heinrichwansing/" target="_blank">Heinrich Wansing</a>.
                     </p>
                 </div>
@@ -476,7 +482,7 @@
 
                     <div class="subsection">
                         <h3>Besides Academia</h3>
-                        <p>When I am not occupied with proofs and modalities, I like to ride my bike through Birmingham (at least as far as it is easily possible) and discover different places. But I also enjoy visiting coffee shops and spending time with friends.
+                        <p>When I am not occupied with proofs and modalities, I like to ride my bike through Birmingham (at least as far as it is easily possible) and discover different places. But I also enjoy sitting in coffee shops and thinking about hard problems.
                             Occasionally, I also do some creative writing (in German) and play the piano.</p>
                     </div>
                 </div>
@@ -546,6 +552,34 @@
             });
         });
 
+        // Helper function to safely extract and parse author information
+        function extractAuthors(item) {
+            let authors = [];
+            
+            // Check multiple possible author fields
+            if (item.author && typeof item.author === 'string' && item.author.trim()) {
+                authors = [item.author.trim()];
+            } else if (Array.isArray(item.author)) {
+                authors = item.author.map(a => typeof a === 'string' ? a : a.name || '').filter(a => a.trim());
+            }
+            
+            // Fallback to creator if author is not available
+            if (authors.length === 0 && item.creator && typeof item.creator === 'string' && item.creator.trim()) {
+                authors = [item.creator.trim()];
+            }
+            
+            // Clean up multiple authors if they exist (sometimes separated by commas or 'and')
+            if (authors.length > 0) {
+                const authorStr = authors[0];
+                // Handle cases like "Author1, Author2" or "Author1 and Author2"
+                if (authorStr.includes(',') || authorStr.includes(' and ')) {
+                    authors = authorStr.split(/,\s*|\s+and\s+/).filter(a => a.trim());
+                }
+            }
+            
+            return authors;
+        }
+
         // Fetch RSS Feed using your suggested approach
         async function fetchRSSFeed() {
             const rssFeedContainer = document.getElementById("rss-feed");
@@ -574,11 +608,16 @@
                             day: 'numeric' 
                         });
                         
+                        const authors = extractAuthors(item);
+                        const authorHTML = authors.length > 0 
+                            ? `<span class="rss-item-author">✍️ ${authors.join(', ')}</span>`
+                            : '';
+                        
                         rssItem.innerHTML = `
                             <a href="${item.link}" target="_blank">${item.title}</a>
                             <div class="rss-item-meta">
                                 <span>📅 ${formattedDate}</span>
-                                ${item.author ? `<span>✍️ ${item.author}</span>` : ''}
+                                ${authorHTML}
                             </div>`;
                         rssFeedContainer.appendChild(rssItem);
                     });
@@ -597,11 +636,16 @@
                             day: 'numeric' 
                         });
                         
+                        const authors = extractAuthors(item);
+                        const authorHTML = authors.length > 0 
+                            ? `<span class="rss-item-author">✍️ ${authors.join(', ')}</span>`
+                            : '';
+                        
                         rssItem.innerHTML = `
                             <a href="${item.link}" target="_blank">${item.title}</a>
                             <div class="rss-item-meta">
                                 <span>📅 ${formattedDate}</span>
-                                ${item.author ? `<span>✍️ ${item.author}</span>` : ''}
+                                ${authorHTML}
                             </div>`;
                         rssFeedContainer.appendChild(rssItem);
                     }
