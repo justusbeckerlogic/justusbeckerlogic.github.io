@@ -486,7 +486,7 @@
                         <h3>Updates</h3>
                         <ul class="updates-list" id="updates-list">
                             <li><span class="update-date">25. Jul. 2026</span> <span>I gave a contributed talk at the <a href="https://sonia-marin.github.io/imla26/" target="_blank">8th IMLA</a> in Lisbon</span></li>
-                            <li><span class="update-date">24. Jul. 2026</span> <span>I gave a contributed talk at the <a href="https://www.lix.polytechnique.fr/~lutz/orgs/SD26.html" target="_blank">6th Structures and Deductions</a> in Lisbon</span></li>
+                            <li><span class="update-date">24. Jul. 2026</span> <span>I gave a contributed talk at the <a href="https://www.lix.polytechnique.fr/~lutz/orgs/SD26.html" target="_blank">6th SD</a> in Lisbon</span></li>
                             <li><span class="update-date">2. Jul. 2026</span> <span>I gave a short talk at the <a href="https://events.illc.uva.nl/aiml2026/" target="_blank">30th AiML</a> in Amsterdam</span></li>
                             <li><span class="update-date">1. Apr. 2026</span> <span>I gave a contributed talk at the <a href="https://toddwaughambridge.co.uk/bctcs2026/" target="_blank">42nd BCTCS</a> in Birmingham</span></li>
                             <li><span class="update-date">Jan. - Mar. 2026</span> <span>I visited <a href="https://www.rug.nl/staff/d.r.s.ramanayake/" target="_blank">Revantha Ramanayake</a> and his research group in Groningen</span></li>
@@ -590,7 +590,7 @@
                 if (data && data.items && data.items.length > 0) {
                     rssFeedContainer.innerHTML = "";
                     const allItems = data.items.slice(0, 10); // Keep up to 10 items
-                    const initialItems = data.items.slice(0, 5); // Show first 5
+                    const initialItems = data.items.slice(0, 3); // Show first 5
                     
                     // Display initial 5 items
                     initialItems.forEach(item => {
@@ -620,7 +620,7 @@
                     });
                     
                     // Add remaining items (initially hidden)
-                    for (let i = 5; i < allItems.length; i++) {
+                    for (let i = 3; i < allItems.length; i++) {
                         const item = allItems[i];
                         const rssItem = document.createElement("div");
                         rssItem.classList.add("rss-item");
@@ -648,7 +648,7 @@
                     }
                     
                     // Show expand button if more than 5 items available
-                    if (allItems.length > 5) {
+                    if (allItems.length > 3) {
                         expandBtn.style.display = 'block';
                     }
                 } else {
